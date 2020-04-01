@@ -1,0 +1,62 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Node.js + express WebScraping www.santandermovil.cl ZWallet (zentagroup.com)",
+    "description": "This is a microservice to perform webscraping (web crawling) using puppeteer to santandermovil (chile) web page and do some actions in \"Cuenta vista\", for example: get lasts income transfers or perform transfer to other accounts.\n\nThis microservice works with ZWallet business and Zwallet DB.",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/zentapay/backoffice/api/v1",
+  "tags": [
+    {
+      "name": "Coin Transfers",
+      "description": "API for handle buy Zcoins"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/coin-transfers": {
+      "get": {
+        "tags": [
+          "Coin Transfers"
+        ],
+        "description": "Detect new transfers and charge zcoin poins in ZWallet",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Process finished with success"
+          }
+        }
+      }
+    },
+    "/store-payments": {
+      "get": {
+        "tags": [
+          "Store Payments"
+        ],
+        "summary": "Transfer to store Zcoin points in CLP",
+        "responses": {
+          "200": {
+            "description": "Process finished with success"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+  }
+}
