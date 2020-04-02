@@ -1,4 +1,5 @@
 import * as mainLoader from './main';
+import { startDbConnection } from './db';
 import logger from './logger';
 
 /**
@@ -9,8 +10,13 @@ import logger from './logger';
  * @return {Promise<void>}
  */
 export default async ({ expressApp  }: any): Promise<any> => {
-    logger.info('Initializing loaders');
+    logger.log({ message: ' Initializing loaders ...', level: 'verbose' });
+
 
     await mainLoader.default({ app: expressApp });
-    logger.info('Main express config loaded');
+    logger.log({ message: ' ✓ General configs (Routes, Swagger, bodyParser, cors, ErrorHandlers)', level: 'verbose' });
+
+    logger.log({ message: ' Connecting to database ...', level: 'verbose' });
+    await startDbConnection();
+    logger.log({ message: ' ✓ Database connection', level: 'verbose' });
 };

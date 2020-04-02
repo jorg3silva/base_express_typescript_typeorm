@@ -3,6 +3,15 @@ import config from './config';
 import express from 'express';
 import logger, { MyStream as LoggerStream } from './loaders/logger';
 import morgan from 'morgan';
+// import { Connection, createConnection } from 'typeorm';
+
+/*
+createConnection().then(async (connection: Connection): Promise<any> => {
+    await startServer();
+}).catch((error: any): void => {
+    logger.error(`Can't connect to db. Check the credentials.  ${error}`);
+});
+*/
 
 async function startServer(): Promise<any> {
 
@@ -22,11 +31,9 @@ async function startServer(): Promise<any> {
             process.exit(1);
             return;
         }
-        logger.info(`
-      #####################################################
-       Express API Server listening on port: ${config.port}
-      #####################################################
-    `);
+        logger.info(`#######################################################`);
+        logger.info(` Express API Server listening on port: ${config.port}`);
+        logger.info(`#######################################################`);
     });
 }
 

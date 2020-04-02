@@ -27,6 +27,9 @@ if (process.env.NODE_ENV !== 'development') {
                 winston.format.cli(),
                 winston.format.splat(),
                 winston.format.colorize(),
+                winston.format.printf(
+                    (info: any): string => `${info.timestamp} ${info.level}: ${info.message}`,
+                ),
             ),
         }),
     );
@@ -40,7 +43,7 @@ const loggerInstance = winston.createLogger({
     levels: winston.config.npm.levels,
     format: winston.format.combine(
         winston.format.timestamp({
-            format: 'YYYY-MM-DD HH:mm:ss',
+            format: 'DD/MM/YYYY HH:mm:ss',
         }),
         winston.format.errors({ stack: true }),
         winston.format.splat(),
