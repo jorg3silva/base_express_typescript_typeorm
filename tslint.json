@@ -25,7 +25,8 @@
             "member-variable-declaration"
         ],
         "no-consecutive-blank-lines": [true, 4],
-        "max-line-length": [true, 160]
+        "max-line-length": [true, 160],
+        "align": [ false ]
     },
     "rulesDirectory": []
 }

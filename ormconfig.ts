@@ -1,6 +1,6 @@
 import config from './src/config';
 
-module.exports = {
+export default {
     type: 'mysql',
     host: config.db.host,
     port: config.db.port,

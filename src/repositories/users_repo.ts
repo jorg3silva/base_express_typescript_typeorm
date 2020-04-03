@@ -92,11 +92,7 @@ export class UsersRepo extends Repository<Users>{
                 SELECT * FROM users
                 left join user_roles ur on ur.id_user = users.id
                 where users.id=?
-            `,                         [id]);
-
-
-            logger.inffo('asdasd');
-
+            `, [id]);
             return res;
         }    catch (e) {
             throw e;

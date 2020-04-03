@@ -16,6 +16,7 @@ export const startDbConnection = async (): Promise<any> => {
     let connectResponse: Connection;
 
     try {
+        // @ts-ignore
         connectResponse = await createConnection({ ...ormconfig });
         if (connectResponse === undefined) {
             logger.error(`Can't connect to db. Check the credentials. `);
