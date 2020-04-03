@@ -151,12 +151,44 @@ export class UsersController {
         try {
             const resDelete = await UsersService.delete(id);
             if (!! resDelete && resDelete.SALE_NOT_FOUND === undefined) {
-                util.setSuccess(HttpStatus.OK, 'User deleted', { deleted: !! resDelete });
+                util.setSuccess(HttpStatus.OK, 'User soft deleted', { deleted: !! resDelete });
             } else {
                 util.setSuccess(HttpStatus.OK, 'Cant delete user', { deleted: false });
                 if (resDelete.SALE_NOT_FOUND !== undefined) {
                     util.setSuccess(HttpStatus.OK, resDelete.SALE_NOT_FOUND, { deleted: false });
                 }
+            }
+            return util.send(res);
+        } catch (error) {
+            util.setError(HttpStatus.INTERNAL_SERVER_ERROR, error);
+            return util.send(res);
+        }
+    }
+
+
+    /**
+     *
+     *  get query raw
+     *
+     * @param {e.Request} req
+     * @param {e.Response} res
+     * @return {Promise<e.Response>}
+     */
+    static getUserAndRoles = async (req: Request, res: Response): Promise<Response> => {
+        const util = new Responses();
+        const id = parseInt(req.params.id, 10);
+
+        if (id === undefined) {
+            util.setError(HttpStatus.INTERNAL_SERVER_ERROR, 'missing id in request.');
+            return util.send(res);
+        }
+
+        try {
+            const user = await UsersService.getUserAndRoles(id);
+            if (user !== null) {
+                util.setSuccess(HttpStatus.OK, 'User and roles retrieved', user);
+            } else {
+                util.setSuccess(HttpStatus.OK, 'User not found');
             }
             return util.send(res);
         } catch (error) {

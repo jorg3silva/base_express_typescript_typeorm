@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn, ObjectType } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, ObjectType, UpdateDateColumn } from 'typeorm';
 import { BusinessAccounts } from './BusinessAccounts';
 import { UserRoles } from './UserRoles';
 import config from './../config';
@@ -24,13 +24,13 @@ export class Users {
     @Column('datetime', { name: 'date_birth', nullable: true })
     dateBirth: Date | null;
 
-    @Column('datetime', { name: 'region', nullable: true })
+    @Column('varchar', { name: 'region', nullable: true, length: 255 })
     region: Date | null;
 
-    @Column('datetime', { name: 'city', nullable: true })
+    @Column('varchar', { name: 'city', nullable: true, length: 255 })
     city: Date | null;
 
-    @Column('datetime', { name: 'adress', nullable: true })
+    @Column('varchar', { name: 'adress', nullable: true, length: 255 })
     adress: Date | null;
 
     @Column('datetime', {
@@ -39,7 +39,7 @@ export class Users {
     })
     createdAt: Date;
 
-    @Column('datetime', { name: 'updated_at', nullable: true })
+    @UpdateDateColumn({ name: 'updated_at', nullable: true })
     updatedAt: Date | null;
 
     @Column('datetime', { name: 'last_conection_at', nullable: true })
@@ -71,6 +71,11 @@ export class Users {
         default: (): string => '0',
     })
     banned: boolean | null;
+
+    @Column('datetime', {
+        name: 'delete_date',
+    })
+    deleteDate: Date;
 
     @OneToMany(
         (): ObjectType<BusinessAccounts> => BusinessAccounts,

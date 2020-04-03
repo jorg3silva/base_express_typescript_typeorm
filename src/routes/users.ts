@@ -7,8 +7,12 @@ export const router = Router();
 
 
 router.get('/', UsersController.getAll); // list
-router.post('/', v.salesValidationRulesCreate(), v.validate , UsersController.create); // create
+router.post('/', UsersController.create); // create
 router.get('/:id', UsersController.getOne); // get one
-router.put('/:id', v.salesValidationRulesEdit(), v.validate, UsersController.edit); // edit
+router.put('/:id', UsersController.edit); // edit
 router.delete('/:id', UsersController.delete); // delete
+router.get('/roles/:id', UsersController.getUserAndRoles); // delete
+
+// with validations
+// router.post('/', v.salesValidationRulesCreate(), v.validate , UsersController.create); // create
 

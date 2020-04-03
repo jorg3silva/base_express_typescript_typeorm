@@ -13,7 +13,7 @@ import config from './../config';
 
 
 @Index('fk_business_accounts_created_by', ['createdBy'], {})
-@Entity('business_accounts', { schema: config.db.namee })
+@Entity('business_accounts', { schema: config.db.name })
 export class BusinessAccounts {
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;

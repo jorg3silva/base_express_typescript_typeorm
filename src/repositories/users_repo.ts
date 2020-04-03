@@ -1,5 +1,6 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, getManager } from 'typeorm';
 import { Users } from '../entity/Users';
+import logger from '../loaders/logger';
 
 /**
  *      User Repo, Queryes & ORM methods to handle data
@@ -46,6 +47,11 @@ export class UsersRepo extends Repository<Users>{
     createNew = async (user: any): Promise<any> =>  {
         try {
 
+            const newUser = this.create();
+            newUser.name = user.name;
+            newUser.rut = user.rut;
+
+            return this.save(newUser);
 
         } catch (error) {
             throw error;
@@ -56,15 +62,18 @@ export class UsersRepo extends Repository<Users>{
      *
      *      Edit user, only pass id and total.
      *
-     * @param editSale => {id, total}
+     * @param editUser => {id, total}
      * @return {Promise<*>}
      */
-    edit = async (editSale: any): Promise<any> =>  {
+    edit = async (editUser: any): Promise<any> =>  {
         try {
-            const p = new Promise<any>((res: any , rej: any): void => {
-                res([editSale]);
-            });
-            return await p;
+            const user: Users = await this.getById(editUser.id);
+            user.name = editUser.name;
+            user.rut = editUser.rut;
+            if (editUser.softdelete !== undefined) {
+                user.softdelete = editUser.softdelete;
+            }
+            return this.save(user);
         } catch (error) {
             throw error;
         }
@@ -73,19 +82,24 @@ export class UsersRepo extends Repository<Users>{
 
     /**
      *
-     *      Delete user, only pass id for found it.
-     *
      * @param id
-     * @return {Promise<*>}
+     * @return {Promise<any>}
      */
-    delete = async (id: number): Promise<any> =>  {
+    getUserAndRoles = async (id: number): Promise<any> => {
         try {
-            const p = new Promise<any>((res: any , rej: any): void => {
-                res(true);
-            });
-            return await p;
-        } catch (error) {
-            throw error;
+            const manager = getManager();
+            const res = await manager.query(`
+                SELECT * FROM users
+                left join user_roles ur on ur.id_user = users.id
+                where users.id=?
+            `,                         [id]);
+
+
+            logger.inffo('asdasd');
+
+            return res;
+        }    catch (e) {
+            throw e;
         }
     }
 

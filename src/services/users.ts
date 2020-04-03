@@ -9,9 +9,6 @@ import { getCustomRepository } from 'typeorm';
  */
 export class UsersService {
 
-    constructor(private usersRepository: UsersRepo) {
-    }
-
     /**
      *      Obtain all users
      *
@@ -48,7 +45,7 @@ export class UsersService {
     static create = async (user: any): Promise<any> => {
         try {
             const userRepo = getCustomRepository(UsersRepo);
-            return await userRepo.createNew();
+            return await userRepo.createNew(user);
         } catch (error) {
             throw error;
         }
@@ -57,12 +54,13 @@ export class UsersService {
 
     /**
      *      edit user
-     * @param editSale
+     * @param editUser
      * @return {Promise<void>}
      */
-    static edit = async (editSale: any): Promise<any> => {
+    static edit = async (editUser: any): Promise<any> => {
         try {
-            return await UsersRepo.edit(editSale);
+            const userRepo = getCustomRepository(UsersRepo);
+            return await userRepo.edit(editUser);
         } catch (error) {
             throw error;
         }
@@ -75,10 +73,27 @@ export class UsersService {
      */
     static delete = async (id: any): Promise<any> => {
         try {
-            return await UsersRepo.delete(id);
+            const userRepo = getCustomRepository(UsersRepo);
+            return await userRepo.edit({ id, softdelete: 1 });
         } catch (error) {
             throw error;
         }
     }
+
+
+    /**
+     *      Obtain first by id
+     * @param userId
+     * @return {Promise<*>}
+     */
+    static getUserAndRoles = async (userId: number): Promise<any> => {
+        try {
+            const userRepo = getCustomRepository(UsersRepo);
+            return await userRepo.getUserAndRoles(userId);
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
 
