@@ -1,21 +1,26 @@
-import { SalesRepo } from '../repositories/sales_repo';
+import { UsersRepo } from '../repositories/users_repo';
+import { getCustomRepository } from 'typeorm';
 
 
 /**
- *      Sales logic service
+ *      Users logic service
  *
  * @author Jorge Silva Aguilera
  */
-export class SalesService {
+export class UsersService {
+
+    constructor(private usersRepository: UsersRepo) {
+    }
 
     /**
-     *      Obtain all sales
+     *      Obtain all users
      *
      * @return {Promise<*>}
      */
     static getAll = async (): Promise<any> => {
         try {
-            return await SalesRepo.getAll();
+            const userRepo = getCustomRepository(UsersRepo);
+            return await userRepo.getAll();
         } catch (error) {
             throw error;
         }
@@ -23,25 +28,27 @@ export class SalesService {
 
     /**
      *      Obtain first by id
-     * @param saleId
+     * @param userId
      * @return {Promise<*>}
      */
-    static getById = async (saleId: number): Promise<any> => {
+    static getById = async (userId: number): Promise<any> => {
         try {
-            return await SalesRepo.getById(saleId);
+            const userRepo = getCustomRepository(UsersRepo);
+            return await userRepo.getById(userId);
         } catch (error) {
             throw error;
         }
     }
 
     /**
-     *      Create sale
-     * @param sale
+     *      Create user
+     * @param user
      * @return {Promise<void>}
      */
-    static create = async (sale: any): Promise<any> => {
+    static create = async (user: any): Promise<any> => {
         try {
-            return await SalesRepo.create(sale);
+            const userRepo = getCustomRepository(UsersRepo);
+            return await userRepo.createNew();
         } catch (error) {
             throw error;
         }
@@ -49,26 +56,26 @@ export class SalesService {
 
 
     /**
-     *      edit sale
+     *      edit user
      * @param editSale
      * @return {Promise<void>}
      */
     static edit = async (editSale: any): Promise<any> => {
         try {
-            return await SalesRepo.edit(editSale);
+            return await UsersRepo.edit(editSale);
         } catch (error) {
             throw error;
         }
     }
 
     /**
-     *      delete sale
+     *      delete user
      * @param id
      * @return {Promise<void>}
      */
     static delete = async (id: any): Promise<any> => {
         try {
-            return await SalesRepo.delete(id);
+            return await UsersRepo.delete(id);
         } catch (error) {
             throw error;
         }

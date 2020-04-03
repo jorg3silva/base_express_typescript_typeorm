@@ -1,10 +1,10 @@
 import { Router, Request, Response } from 'express';
-import { router as salesRouter }  from './sales';
+import { router as usersRouter }  from './users';
 
 export const router = Router();
 
 // Import other routes here
-router.use('/sales', salesRouter);
+router.use('/users', usersRouter);
 
 
 // default route.

@@ -17,11 +17,6 @@ export default {
     port: parseInt(process.env.PORT, 10),
 
     /**
-     * That long string from mlab
-     */
-    databaseHost: process.env.DB_HOST,
-
-    /**
      * Your secret sauce
      */
     jwtSecret: process.env.JWT_SECRET,
@@ -47,5 +42,16 @@ export default {
         apiKey: 'API key from sengrid',
         domain: 'Domain Name from sendgrid',
         // add others here.
+    },
+
+    /**
+     * Database Configs
+     */
+    db: {
+        host: process.env.DB_HOST,
+        name: process.env.DB_NAME,
+        user: process.env.DB_USER,
+        pass: process.env.DB_PASS,
+        port: process.env.DB_PORT,
     },
 };

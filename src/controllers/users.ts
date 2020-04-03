@@ -1,15 +1,15 @@
 import { Response, Request } from 'express';
-import { SalesService } from '../services/sales';
+import { UsersService } from '../services/users';
 import { ResponsesUtil as Responses } from '../util/responses';
 import * as HttpStatus from 'http-status-codes';
 
 /***
  *
- *      Controller Sales CRUD Example
+ *      Controller Users CRUD Example
  *
  * @author Jorge Silva Aguilera
  */
-export class SalesController {
+export class UsersController {
 
     /**
      *
@@ -22,11 +22,11 @@ export class SalesController {
     static getAll = async (req: Request, res: Response): Promise<Response> => {
         const util: Responses = new Responses();
         try {
-            const allSales = await SalesService.getAll();
-            if (allSales.length > 0) {
-                util.setSuccess(HttpStatus.OK, 'Sales retrieved', allSales);
+            const allUsers = await UsersService.getAll();
+            if (allUsers.length > 0) {
+                util.setSuccess(HttpStatus.OK, 'Users retrieved', allUsers);
             } else {
-                util.setSuccess(HttpStatus.OK, 'No Sales found');
+                util.setSuccess(HttpStatus.OK, 'No Users found');
             }
             return util.send(res);
         } catch (error) {
@@ -53,11 +53,11 @@ export class SalesController {
         }
 
         try {
-            const sale = await SalesService.getById(id);
-            if (sale !== null) {
-                util.setSuccess(HttpStatus.OK, 'Sale retrieved', sale);
+            const user = await UsersService.getById(id);
+            if (user !== null) {
+                util.setSuccess(HttpStatus.OK, 'User retrieved', user);
             } else {
-                util.setSuccess(HttpStatus.OK, 'Sale not found');
+                util.setSuccess(HttpStatus.OK, 'User not found');
             }
             return util.send(res);
         } catch (error) {
@@ -79,11 +79,11 @@ export class SalesController {
         const body = req.body;
 
         try {
-            const sale = await SalesService.create(body);
-            if (sale instanceof Object) {
-                util.setSuccess(HttpStatus.OK, 'Sale create with success', sale);
+            const user = await UsersService.create(body);
+            if (user instanceof Object) {
+                util.setSuccess(HttpStatus.OK, 'User create with success', user);
             } else {
-                util.setSuccess(HttpStatus.OK, 'Cant create sale');
+                util.setSuccess(HttpStatus.OK, 'Cant create user');
             }
             return util.send(res);
         } catch (error) {
@@ -112,17 +112,17 @@ export class SalesController {
         }
 
         try {
-            const sale = await SalesService.edit({
+            const user = await UsersService.edit({
                 id,
                 ...body,
             });
 
-            if (sale instanceof Object) {
-                util.setSuccess(HttpStatus.OK, 'Sale updated with success', sale);
+            if (user instanceof Object) {
+                util.setSuccess(HttpStatus.OK, 'User updated with success', user);
             } else {
-                util.setSuccess(HttpStatus.OK, 'Cant update sale');
-                if (sale.SALE_NOT_FOUND !== undefined) {
-                    util.setSuccess(HttpStatus.OK, sale.SALE_NOT_FOUND);
+                util.setSuccess(HttpStatus.OK, 'Cant update user');
+                if (user.SALE_NOT_FOUND !== undefined) {
+                    util.setSuccess(HttpStatus.OK, user.SALE_NOT_FOUND);
                 }
             }
             return util.send(res);
@@ -149,11 +149,11 @@ export class SalesController {
         }
 
         try {
-            const resDelete = await SalesService.delete(id);
+            const resDelete = await UsersService.delete(id);
             if (!! resDelete && resDelete.SALE_NOT_FOUND === undefined) {
-                util.setSuccess(HttpStatus.OK, 'Sale deleteddddd', { deleted: !! resDelete });
+                util.setSuccess(HttpStatus.OK, 'User deleted', { deleted: !! resDelete });
             } else {
-                util.setSuccess(HttpStatus.OK, 'Cant delete sale', { deleted: false });
+                util.setSuccess(HttpStatus.OK, 'Cant delete user', { deleted: false });
                 if (resDelete.SALE_NOT_FOUND !== undefined) {
                     util.setSuccess(HttpStatus.OK, resDelete.SALE_NOT_FOUND, { deleted: false });
                 }
